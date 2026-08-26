@@ -1,5 +1,6 @@
 services:
   discord-auto-messaging:
+    image: ghcr.io/hakiim01/discord-auto-messaging:dev
     build:
       context: .
       dockerfile: Dockerfile

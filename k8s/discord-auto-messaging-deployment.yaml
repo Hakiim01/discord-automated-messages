@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose --file compose.yml convert -o k8s/
+    kompose.cmd: kompose --file compose.yml convert -o k8s
     kompose.version: 1.38.0 (HEAD)
   labels:
     io.kompose.service: discord-auto-messaging
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose --file compose.yml convert -o k8s/
+        kompose.cmd: kompose --file compose.yml convert -o k8s
         kompose.version: 1.38.0 (HEAD)
       labels:
         io.kompose.service: discord-auto-messaging
@@ -26,7 +26,7 @@ spec:
         - envFrom:
             - configMapRef:
                 name: env
-          image: discord-auto-messaging
+          image: ghcr.io/hakiim01/discord-auto-messaging:dev
           name: discord-auto-messaging
           volumeMounts:
             - mountPath: /app/data
