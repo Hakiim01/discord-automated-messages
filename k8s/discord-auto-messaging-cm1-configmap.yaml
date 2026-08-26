@@ -1,0 +1,137 @@
+apiVersion: v1
+data:
+  __init__.py: ""
+  cli.py: |-
+    import os
+    from discord_auto_messaging.service import DiscordMessageService
+
+
+    def main():
+        webhook_url = os.environ["DISCORD_WEBHOOK_URL"]
+
+        service = DiscordMessageService(
+            webhook_url=webhook_url,
+            file_path=os.environ["FILE_PATH"],
+            interval_seconds=3600*int(os.environ["INTERVAL_HOURS"]),
+        )
+        service.start_sending()
+
+
+    if __name__ == "__main__":
+        main()
+  requirements.txt: requests
+  send.py: |
+    import requests
+    import json
+
+    webhook_url = "https://discord.com/api/webhooks/1542280440361123850/Bxawt8hy7eyLePNpWLnUeNZKBv1gHTnCrswDAL9YjNXEeiJZWgj-6ofx93zJHB53bB7N"
+
+    def send_discord_message(webhook_url, message_content):
+        """
+        Sends a message to a Discord channel using a webhook URL.
+
+        Parameters:
+        - webhook_url (str): The Discord webhook URL.
+        - message_content (str): The content of the message to send.
+
+        Returns:
+        - bool: True if the message was sent successfully, False otherwise.
+        """
+        data = {
+            "content": message_content
+        }
+
+        headers = {
+            "Content-Type": "application/json"
+        }
+
+        response = requests.post(webhook_url, data=json.dumps(data), headers=headers)
+
+        if response.status_code == 204:
+            print("Message sent successfully!")
+            return True
+        else:
+            print(f"Failed to send message. Status code: {response.status_code}")
+            print(response.text)
+            return False
+  service.py: |-
+    import random
+    import time
+
+    from discord_auto_messaging.utils import get_logger
+    from discord_auto_messaging.send import send_discord_message
+
+
+    def random_line(path: str) -> str:
+        with open(path, encoding="utf-8") as messages_file:
+            lines = [line.strip() for line in messages_file if line.strip()]
+
+        if not lines:
+            raise ValueError(f"No non-empty messages in {path}")
+
+        return random.choice(lines)
+
+
+    class DiscordMessageService:
+        def __init__(self, webhook_url: str, file_path: str, interval_seconds: int = 3600):
+            self.webhook_url = webhook_url
+            self.file_path = file_path
+            self.interval_seconds = interval_seconds
+            self.logger = get_logger(__name__)
+
+        def start_sending(self):
+            self.logger.info(
+                "Starting Discord message service; interval=%s seconds",
+                self.interval_seconds,
+            )
+
+            while True:
+                try:
+                    message = random_line(self.file_path)
+                    success = send_discord_message(self.webhook_url, message)
+
+                    if success:
+                        self.logger.info("Sent one Discord message.")
+                    else:
+                        self.logger.error("Discord rejected or failed to accept the message.")
+
+                except Exception:
+                    self.logger.exception("Message cycle failed.")
+
+                time.sleep(self.interval_seconds)
+  utils.py: |-
+    import logging
+
+    def get_logger(name: str) -> logging.Logger:
+        """
+        Creates and returns a logger instance with the specified name.
+
+        Parameters:
+        - name (str): The name of the logger.
+
+        Returns:
+        - logging.Logger: A configured logger instance.
+        """
+        logger = logging.getLogger(name)
+        logger.setLevel(logging.DEBUG)
+
+        # Create console handler and set level to debug
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+
+        # Create formatter
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+        # Add formatter to console handler
+        ch.setFormatter(formatter)
+
+        # Add console handler to logger
+        if not logger.handlers:
+            logger.addHandler(ch)
+
+        return logger
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: discord-auto-messaging
+  name: discord-auto-messaging-cm1

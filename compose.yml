@@ -1,0 +1,10 @@
+services:
+  discord-auto-messaging:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/app/data
+      - ./discord_auto_messaging:/app/discord_auto_messaging
+    env_file:
+      - .env

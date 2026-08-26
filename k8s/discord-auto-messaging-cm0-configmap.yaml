@@ -1,0 +1,117 @@
+apiVersion: v1
+data:
+  messages.txt: |-
+    i love you
+    you are awesome
+    too cute
+    ma wifeeee
+    you are the sun to my sunflower
+    little rat
+    why are you this cute
+    yes i was bored, but i couln't stop thinking about you
+    im thinking of you fondly
+    you make my heart so happy
+    miss you more than words can say
+    you are my favorite person
+    my heart belongs to you
+    you make every day brighter
+    always thinking about you
+    you are my sweetest thought
+    love you to the moon and back
+    you make me smile like an idiot
+    you are my whole world
+    you make everything feel better
+    i am so lucky to have you
+    you are the best part of my day
+    my love for you grows every day
+    you make my heart skip a beat
+    i cannot stop smiling because of you
+    you are my favorite hello
+    you are always on my mind
+    you make life feel magical
+    i adore everything about you
+    you are my safe place
+    my day is better whenever i hear from you
+    you are the sweetest person i know
+    i love being yours
+    you make my heart feel full
+    you are my sunshine on cloudy days
+    i would choose you every time
+    you are the reason i believe in love
+    you make ordinary moments special
+    i miss your beautiful face
+    you are incredibly precious to me
+    my favorite place is next to you
+    you bring so much joy into my life
+    i love your beautiful heart
+    you make me feel understood
+    you are my dream come true
+    i am always here for you
+    you are the cutest person alive
+    you make my world brighter
+    i love every moment with you
+    you are my favorite notification
+    thinking about you makes me happy
+    you have my heart forever
+    you make me feel so loved
+    i am completely crazy about you
+    you are my sweetest blessing
+    you are the one i want beside me
+    i love your laugh so much
+    you make my life more beautiful
+    you are my favorite everything
+    i cannot imagine my life without you
+    you are worth every mile and every moment
+    my heart smiles whenever i see you
+    you make love feel easy
+    i cherish you more than you know
+    you are the person i want to tell everything to
+    you make my soul feel peaceful
+    i am proud to love you
+    you are my forever favorite
+    your smile is my favorite sight
+    you make me feel like the luckiest person
+    i love the way you make me laugh
+    you are the sweetest part of my life
+    my love for you has no end
+    you are always worth waiting for
+    i feel at home with you
+    you make every little thing exciting
+    you are the thought i wake up with
+    you are the last thought before i sleep
+    i love you more every time i see you
+    you are my perfect person
+    you make my heart dance
+    you deserve all the love in the world
+    i love how special you make me feel
+    you are my favorite adventure
+    you make my life complete
+    my heart is happiest with you
+    i will always be cheering for you
+    you are more wonderful than words can say
+    i love your kindness and your soul
+    you make every day worth waking up for
+    you are my sweetest comfort
+    i am always thinking about your smile
+    you are the love i never want to lose
+    you make me feel so lucky
+    i love sharing my life with you
+    you are my favorite person to miss
+    my heart finds peace in you
+    you make everything more fun
+    i will keep choosing you forever
+    you are my little piece of happiness
+    loving you is my favorite thing
+    you are the best thing that ever happened to me
+    my heart is yours always
+    you make me happier than you know
+    i love you endlessly
+    i miss cuddling with you
+    you are better then the ikea shark
+    my cutie poopy noodle
+    you dont know
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: discord-auto-messaging
+  name: discord-auto-messaging-cm0
